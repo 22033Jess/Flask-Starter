@@ -47,7 +47,16 @@ def pizza(id):
     cur = conn.cursor()
     cur.execute('SELECT * FROM pizza WHERE id = ?', (id,))
     pizza = cur.fetchone()
-    cur.execute('SELECT Topping.name, Topping.description, Topping.gf, Topping.vegan FROM PizzaTopping JOIN Topping ON PizzaTopping.tid = Topping.id WHERE PizzaTopping.pid = ?', (id,))
+    cur.execute('''
+    SELECT Topping.name, 
+           Topping.description, 
+           Topping.gf, 
+           Topping.vegan 
+    FROM PizzaTopping 
+    JOIN Topping 
+    ON PizzaTopping.tid = Topping.id 
+    WHERE PizzaTopping.pid = ?
+    ''', (id,))    
     pizza_toppings = cur.fetchall()
     conn.close()
 
