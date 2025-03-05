@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block content %}
+<hr>
+<h1>This is a {{ pizza[1] }} pizza.</h1>
+<p>{{ pizza }}</p>
+
+<h2>Toppings</h2>
+{% for topping in pizza_toppings %}
+    <p>{{topping[0]}} - {{ topping[1] }}</p>
+{% endfor %}
+<hr>
+{% endblock %}
