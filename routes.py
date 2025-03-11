@@ -47,6 +47,7 @@ def pizza(id):
     cur = conn.cursor()
     cur.execute('SELECT * FROM pizza WHERE id = ?', (id,))
     pizza = cur.fetchone()
+    #using a join to get the toppings for the pizza
     cur.execute('''
     SELECT Topping.name, 
            Topping.description, 
@@ -56,7 +57,7 @@ def pizza(id):
     JOIN Topping 
     ON PizzaTopping.tid = Topping.id 
     WHERE PizzaTopping.pid = ?
-    ''', (id,))    
+    ''', (id,)) # the comma is needed to make it a tuple 
     pizza_toppings = cur.fetchall()
     conn.close()
 
