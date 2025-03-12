@@ -45,7 +45,7 @@ def all_pizzas():
 def pizza(id):
     conn = sqlite3.connect('pizza.db')
     cur = conn.cursor()
-    cur.execute('SELECT * FROM pizza WHERE id = ?', (id,))
+    cur.execute('SELECT name, description, rank, base, photo FROM pizza WHERE id = ?', (id,))
     pizza = cur.fetchone()
     #using a join to get the toppings for the pizza
     cur.execute('''
@@ -59,9 +59,11 @@ def pizza(id):
     WHERE PizzaTopping.pid = ?
     ''', (id,)) # the comma is needed to make it a tuple 
     pizza_toppings = cur.fetchall()
+    cur.execute('SELECT base.name FROM base JOIN Pizza ON Pizza.base = Base.id WHERE Pizza.id = ?', (id,))
+    base = cur.fetchone()
     conn.close()
 
-    return render_template('pizza.html', pizza=pizza, pizza_toppings=pizza_toppings)
+    return render_template('pizza.html', pizza=pizza, pizza_toppings=pizza_toppings, base=base)
 
 if __name__ == '__main__':
     app.run(debug=True)

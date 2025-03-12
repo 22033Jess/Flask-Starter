@@ -13,3 +13,8 @@ nav {
     background-color: crimson;
     color: white;
 }
+
+img {
+    border: 1px solid black;
+    width: 400px;
+}
